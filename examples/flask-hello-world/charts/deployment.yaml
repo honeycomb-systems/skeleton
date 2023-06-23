@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-hello-world
+  namespace: examples
+  labels:
+    app.kubernetes.io/name: flask-hello-world
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: flask-hello-world
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: flask-hello-world
+    spec:
+      containers:
+      - name: flask-hello-world
+        image: localhost:5005/flask-hello-world:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3001

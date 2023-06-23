@@ -6,9 +6,11 @@ configured under the examples/ directory.
 -----------------------------------------------------------------
 """.strip())
 
+
 # Create namespace
 def examples():
     k8s_yaml(['./examples/charts/namespace.yaml'])
+
 
 # Build & deploy express-hello-world app
 def express_hello_world():
@@ -24,12 +26,30 @@ def express_hello_world():
     # Setup port-forward
     k8s_resource(workload='express-hello-world', port_forwards='3000:3000')
 
+
+# Build & deploy flask-hello-world app
+def flask_hello_world():
+    docker_build(
+        'localhost:5005/flask-hello-world',
+        context='./examples/flask-hello-world/',
+        dockerfile='./examples/flask-hello-world/Dockerfile'
+    )
+
+    # Deploy to k8s
+    k8s_yaml(['./examples/flask-hello-world/charts/deployment.yaml'])
+
+    # Setup port-forward
+    k8s_resource(workload='flask-hello-world', port_forwards='3001:3001')
+
+
 # Load Tilt extensions:
 load('ext://git_resource', 'git_checkout')
 
 # Prune old Docker images
 docker_prune_settings(disable=False, max_age_mins=120, num_builds=3, keep_recent=2)
 
+
 # Deploy example applications, and watch/reload as changes are saved
 examples()
 express_hello_world()
+flask_hello_world()

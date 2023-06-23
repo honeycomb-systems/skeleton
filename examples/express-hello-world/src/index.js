@@ -1,3 +1,4 @@
+
 const express = require('express')
 const app = express()
 const port = 3000
@@ -6,10 +7,10 @@ let body = `
 <html>
   <head>
     <title>Hello world!</title>
-    <meta http-equiv="refresh" content="3" />
+    <!--meta http-equiv="refresh" content="3" /-->
   </head>
   <body>
-    Hello world!
+    Hello from express!
   </body>
 </html>
 `

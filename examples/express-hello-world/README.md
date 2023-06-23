@@ -1,5 +1,5 @@
 
-# Getting started with express.js
+# Getting started with [express.js](https://expressjs.com/)
 
 1. Install a version of node
     - `nvm ls-remote`
@@ -15,3 +15,5 @@
     - `npm install`
 5. Run your application
     - `npm run start`
+6. Visit your application in a browser
+    - http://localhost:3000/
