@@ -76,6 +76,11 @@ sudo apt-get install -y kubectl
     - `[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm`
     - `[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"`
 
+10. [Optional] Install [Python Venv](https://docs.python.org/3/library/venv.html). This will make it easier to develop Python services.
+    - `sudo apt-get install python3 python3-venv`
+
+## Appendix
+
 ### Create a dev k8s cluster
 
 This creates the virtual infrastructure to deploy your services on.
