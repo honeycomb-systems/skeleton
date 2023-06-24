@@ -42,6 +42,21 @@ def flask_hello_world():
     k8s_resource(workload='flask-hello-world', port_forwards='3001:3001')
 
 
+# Build & deploy go-hello-world app
+def go_hello_world():
+    docker_build(
+        'localhost:5005/go-hello-world',
+        context='./examples/go-hello-world/',
+        dockerfile='./examples/go-hello-world/Dockerfile'
+    )
+
+    # Deploy to k8s
+    k8s_yaml(['./examples/go-hello-world/charts/deployment.yaml'])
+
+    # Setup port-forward
+    k8s_resource(workload='go-hello-world', port_forwards='3002:3002')
+
+
 # Load Tilt extensions:
 load('ext://git_resource', 'git_checkout')
 
@@ -53,3 +68,4 @@ docker_prune_settings(disable=False, max_age_mins=120, num_builds=3, keep_recent
 examples()
 express_hello_world()
 flask_hello_world()
+go_hello_world()
