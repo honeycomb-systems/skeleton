@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-hello-world
+  namespace: examples
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: go-hello-world
+  ports:
+    - port: 3002
+      targetPort: 3002
