@@ -48,35 +48,45 @@ sudo apt-get update
 sudo apt-get install -y kubectl
 ```
 
-4. Install [Go Version Manager (gvm)](https://github.com/moovweb/gvm). We need a Go version manager in order to install or upgrade Go for this project.
+4. Install [Helm](https://helm.sh/docs/intro/install/). We need `helm` for k8s package management.
+    - Find the URL for the [latest stable Helm release](https://github.com/helm/helm/releases)
+    - `pushd /tmp`
+    - `wget https://get.helm.sh/helm-v3.12.1-linux-amd64.tar.gz`
+    - `tar -zxvf helm-v3.12.1-linux-amd64.tar.gz`
+    - `mv linux-amd64/helm /usr/local/bin/helm`
+    - `rm helm-v3.12.1-linux-amd64.tar.gz`
+    - `rm -rf linux-amd64/`
+    - `popd`
+
+5. Install [Go Version Manager (gvm)](https://github.com/moovweb/gvm). We need a Go version manager in order to install or upgrade Go for this project.
 
     - `sudo apt-get install curl git mercurial make binutils bison gcc build-essential`
     - `bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)`
     - `source ~/.gvm/scripts/gvm`
 
-5. Install [Go](https://go.dev/), We need Go in order to install other dependencies and run our dev loop.
+6. Install [Go](https://go.dev/), We need Go in order to install other dependencies and run our dev loop.
     - `gvm listall`
     - `gvm install go1.20.5 -B`
     - `gvm list`
     - `gvm use go1.20.5 --default`
 
-6. Install [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/). Kind is used to run a local k8s cluster.
+7. Install [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/). Kind is used to run a local k8s cluster.
     - `go install sigs.k8s.io/kind@v0.20.0`
 
-7. Install [Cattle Patrol (ctlptl)](https://github.com/tilt-dev/ctlptl). Cattle patrol is the tool we'll use to administer, create, and destroy local k8s clusters & Docker image repositories.
+8. Install [Cattle Patrol (ctlptl)](https://github.com/tilt-dev/ctlptl). Cattle patrol is the tool we'll use to administer, create, and destroy local k8s clusters & Docker image repositories.
     - `go install github.com/tilt-dev/ctlptl/cmd/ctlptl@latest`
     - `ctlptl analytics opt out`
 
-8. Install [Tilt.dev](https://docs.tilt.dev/). Tilt will act as the interface to hot-reload code in our local k8s cluster as we make changes.
+9. Install [Tilt.dev](https://docs.tilt.dev/). Tilt will act as the interface to hot-reload code in our local k8s cluster as we make changes.
     - `curl -fsSL https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash`
 
-9. [Optional] Install [Node Version Manager](https://github.com/nvm-sh/nvm). This will make it easier to develop Node.js services.
+10. [Optional] Install [Node Version Manager](https://github.com/nvm-sh/nvm). This will make it easier to develop Node.js services.
     - `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash`
     - `export NVM_DIR="$HOME/.nvm"`
     - `[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm`
     - `[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"`
 
-10. [Optional] Install [Python Venv](https://docs.python.org/3/library/venv.html). This will make it easier to develop Python services.
+11. [Optional] Install [Python Venv](https://docs.python.org/3/library/venv.html). This will make it easier to develop Python services.
     - `sudo apt-get install python3 python3-venv`
 
 ## Appendix
@@ -89,7 +99,7 @@ This creates the virtual infrastructure to deploy your services on.
     - `ctlptl create registry ctlptl-registry --port=5005`
 
 2. Create your dev cluster, referencing your local image registry:
-    - `ctlptl create cluster kind --registry=ctlptl-registry`
+    - `ctlptl apply -f ctlptl-cluster.yaml`
 
 ### Manage your dev k8s cluster
 
@@ -122,7 +132,7 @@ This can be useful for debugging.
 If you want to stop your k8s cluster or reset it, these commands can be helpful. This is also important for validating the installation & release process.
 
 1. Delete your dev cluster:
-    - `ctlptl delete cluster kind`
+    - `ctlptl delete -f ctlptl-cluster.yaml`
 
 2. Delete your local image repository:
     - `ctlptl delete registry ctlptl-registry`
