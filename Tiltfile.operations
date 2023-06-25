@@ -1,0 +1,33 @@
+
+print("""
+-----------------------------------------------------------------
+Hello honeycomb-systems/skeleton! Tilt is evaluating the services
+configured under the operations/ directory.
+-----------------------------------------------------------------
+""".strip())
+
+
+# Create namespace
+def operations():
+    k8s_yaml(['./operations/charts/namespace.yaml'])
+
+
+# Build & deploy express-hello-world app
+def identity_keycloak():
+    # Deploy to k8s
+    k8s_yaml(kustomize('./operations/identity/keycloak/charts/'))
+
+    # Setup port-forward
+    k8s_resource(workload='keycloak', port_forwards='8080:8080')
+
+
+# Load Tilt extensions:
+load('ext://git_resource', 'git_checkout')
+
+# Prune old Docker images
+docker_prune_settings(disable=False, max_age_mins=120, num_builds=3, keep_recent=2)
+
+
+# Deploy operations applications, and watch/reload as changes are saved
+operations()
+identity_keycloak()
