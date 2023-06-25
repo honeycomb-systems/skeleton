@@ -4,3 +4,10 @@ metadata:
   name: identity
   labels:
     name: identity
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: secrets
+  labels:
+    name: secrets
