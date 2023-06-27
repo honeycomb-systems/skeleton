@@ -18,3 +18,10 @@ metadata:
   name: storage-operator
   labels:
     name: storage-operator
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: storage-main
+  labels:
+    name: storage-main
