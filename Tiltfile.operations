@@ -30,6 +30,15 @@ def secrets_vault():
     k8s_resource(workload='vault', port_forwards='8200:8200')
 
 
+# Deploy Minio Operator for S3 compatible storage
+def storage_minio_operator():
+    # Deploy to k8s
+    k8s_yaml(['./operations/storage/minio/charts/console.yaml'])
+
+    # Setup port-forward
+    k8s_resource(workload='console', port_forwards='9090:9090')
+
+
 # Load Tilt extensions:
 load('ext://git_resource', 'git_checkout')
 
@@ -41,3 +50,4 @@ docker_prune_settings(disable=False, max_age_mins=120, num_builds=3, keep_recent
 operations()
 identity_keycloak()
 secrets_vault()
+storage_minio_operator()

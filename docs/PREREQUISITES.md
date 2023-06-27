@@ -89,6 +89,14 @@ sudo apt-get install -y kubectl
 11. [Optional] Install [Python Venv](https://docs.python.org/3/library/venv.html). This will make it easier to develop Python services.
     - `sudo apt-get install python3 python3-venv`
 
+12. [Optional] Install [yq](https://github.com/mikefarah/yq/#install). This will make it easier to develop YAML charts.
+    - `pushd /tmp`
+    - Optionally get the [latest release](https://github.com/mikefarah/yq/releases/)
+    - `wget https://github.com/mikefarah/yq/releases/download/v4.34.1/yq_linux_amd64`
+    - `chmod +x yq_linux_amd64`
+    - `sudo mv yq_linux_amd64 /usr/local/bin/yq`
+    - `popd`
+
 ## Appendix
 
 ### Create a dev k8s cluster

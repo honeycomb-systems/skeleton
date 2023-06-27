@@ -11,3 +11,10 @@ metadata:
   name: secrets
   labels:
     name: secrets
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: storage-operator
+  labels:
+    name: storage-operator
