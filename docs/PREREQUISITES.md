@@ -3,7 +3,27 @@
 
 ## Dev
 
-1. Install [Docker Engine](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository). We need the Docker Engine to run containerized apps in dev.
+1. Change the default setting for open file limits. Emulating a meaningfully complex k8s cluster in local will require more than a typical user.
+```
+grep '* soft nofile 256000' /etc/security/limits.conf \
+    || echo '* soft nofile 256000' | sudo tee -a /etc/security/limits.conf
+grep '* hard nofile 256000' /etc/security/limits.conf \
+    || echo '* hard nofile 256000' | sudo tee -a /etc/security/limits.conf
+
+grep 'fs.file-max=256000' /etc/sysctl.conf \
+    || echo 'fs.file-max=256000' | sudo tee -a /etc/sysctl.conf
+
+grep 'DefaultLimitNOFILE=256000' /etc/systemd/system.conf \
+    || echo 'DefaultLimitNOFILE=256000' | sudo tee -a /etc/systemd/system.conf
+grep 'DefaultLimitNOFILE=256000' /etc/systemd/user.conf \
+    || echo 'DefaultLimitNOFILE=256000' | sudo tee -a /etc/systemd/user.conf
+```
+
+*NOTE: You'll need to log out and log back in for these changes to be applied, since any active sessions will remember the values they started with.*
+
+Verify with `ulimit -a`, or specifically with `ulimit -Sn`, and `ulimit -Hn`.
+
+2. Install [Docker Engine](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository). We need the Docker Engine to run containerized apps in dev.
 
 ```
 sudo apt-get update
@@ -25,7 +45,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 
 Verify with `sudo docker run hello-world`.
 
-2. Setup Docker as a [non-root user](https://docs.docker.com/engine/install/linux-postinstall/). We need Docker to be usable from our normal user in order to be able to leverage Tilt to run our local k8s cluster.
+3. Setup Docker as a [non-root user](https://docs.docker.com/engine/install/linux-postinstall/). We need Docker to be usable from our normal user in order to be able to leverage Tilt to run our local k8s cluster.
 
     - `sudo groupadd docker || true`
     - `sudo usermod -aG docker $USER`
@@ -34,7 +54,7 @@ Verify with `sudo docker run hello-world`.
 
 Verify with `docker run hello-world`.
 
-3. Install [https://kubernetes.io/docs/tasks/tools/](kubectl). We need `kubectl` in order to debug our local k8s cluster.
+4. Install [https://kubernetes.io/docs/tasks/tools/](kubectl). We need `kubectl` in order to debug our local k8s cluster.
 
 ```
 sudo apt-get update
@@ -48,7 +68,7 @@ sudo apt-get update
 sudo apt-get install -y kubectl
 ```
 
-4. Install [Helm](https://helm.sh/docs/intro/install/). We need `helm` for k8s package management.
+5. Install [Helm](https://helm.sh/docs/intro/install/). We need `helm` for k8s package management.
     - Find the URL for the [latest stable Helm release](https://github.com/helm/helm/releases)
     - `pushd /tmp`
     - `wget https://get.helm.sh/helm-v3.12.1-linux-amd64.tar.gz`
@@ -58,38 +78,38 @@ sudo apt-get install -y kubectl
     - `rm -rf linux-amd64/`
     - `popd`
 
-5. Install [Go Version Manager (gvm)](https://github.com/moovweb/gvm). We need a Go version manager in order to install or upgrade Go for this project.
+6. Install [Go Version Manager (gvm)](https://github.com/moovweb/gvm). We need a Go version manager in order to install or upgrade Go for this project.
 
     - `sudo apt-get install curl git mercurial make binutils bison gcc build-essential`
     - `bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)`
     - `source ~/.gvm/scripts/gvm`
 
-6. Install [Go](https://go.dev/), We need Go in order to install other dependencies and run our dev loop.
+7. Install [Go](https://go.dev/), We need Go in order to install other dependencies and run our dev loop.
     - `gvm listall`
     - `gvm install go1.20.5 -B`
     - `gvm list`
     - `gvm use go1.20.5 --default`
 
-7. Install [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/). Kind is used to run a local k8s cluster.
+8. Install [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/). Kind is used to run a local k8s cluster.
     - `go install sigs.k8s.io/kind@v0.20.0`
 
-8. Install [Cattle Patrol (ctlptl)](https://github.com/tilt-dev/ctlptl). Cattle patrol is the tool we'll use to administer, create, and destroy local k8s clusters & Docker image repositories.
+9. Install [Cattle Patrol (ctlptl)](https://github.com/tilt-dev/ctlptl). Cattle patrol is the tool we'll use to administer, create, and destroy local k8s clusters & Docker image repositories.
     - `go install github.com/tilt-dev/ctlptl/cmd/ctlptl@latest`
     - `ctlptl analytics opt out`
 
-9. Install [Tilt.dev](https://docs.tilt.dev/). Tilt will act as the interface to hot-reload code in our local k8s cluster as we make changes.
+10. Install [Tilt.dev](https://docs.tilt.dev/). Tilt will act as the interface to hot-reload code in our local k8s cluster as we make changes.
     - `curl -fsSL https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash`
 
-10. [Optional] Install [Node Version Manager](https://github.com/nvm-sh/nvm). This will make it easier to develop Node.js services.
+11. [Optional] Install [Node Version Manager](https://github.com/nvm-sh/nvm). This will make it easier to develop Node.js services.
     - `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash`
     - `export NVM_DIR="$HOME/.nvm"`
     - `[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm`
     - `[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"`
 
-11. [Optional] Install [Python Venv](https://docs.python.org/3/library/venv.html). This will make it easier to develop Python services.
+12. [Optional] Install [Python Venv](https://docs.python.org/3/library/venv.html). This will make it easier to develop Python services.
     - `sudo apt-get install python3 python3-venv`
 
-12. [Optional] Install [yq](https://github.com/mikefarah/yq/#install). This will make it easier to develop YAML charts.
+13. [Optional] Install [yq](https://github.com/mikefarah/yq/#install). This will make it easier to develop YAML charts.
     - `pushd /tmp`
     - Optionally get the [latest release](https://github.com/mikefarah/yq/releases/)
     - `wget https://github.com/mikefarah/yq/releases/download/v4.34.1/yq_linux_amd64`
