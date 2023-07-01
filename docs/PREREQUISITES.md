@@ -3,25 +3,29 @@
 
 ## Dev
 
-1. Change the default setting for open file limits. Emulating a meaningfully complex k8s cluster in local will require more than a typical user.
+1. Change the default system limits to enable k8s to run without running into resource constraints. Emulating a meaningfully complex k8s cluster in local will require [some defaults](https://kind.sigs.k8s.io/docs/user/known-issues/) to be higher than a typical user.
 ```
-grep '* soft nofile 256000' /etc/security/limits.conf \
-    || echo '* soft nofile 256000' | sudo tee -a /etc/security/limits.conf
-grep '* hard nofile 256000' /etc/security/limits.conf \
-    || echo '* hard nofile 256000' | sudo tee -a /etc/security/limits.conf
+grep '* soft nofile 2097152' /etc/security/limits.conf \
+    || echo '* soft nofile 2097152' | sudo tee -a /etc/security/limits.conf
+grep '* hard nofile 2097152' /etc/security/limits.conf \
+    || echo '* hard nofile 2097152' | sudo tee -a /etc/security/limits.conf
 
-grep 'fs.file-max=256000' /etc/sysctl.conf \
-    || echo 'fs.file-max=256000' | sudo tee -a /etc/sysctl.conf
+grep 'fs.file-max=2097152' /etc/sysctl.conf \
+    || echo 'fs.file-max=2097152' | sudo tee -a /etc/sysctl.conf
+grep 'fs.inotify.max_user_watches=524288' /etc/sysctl.conf \
+    || echo 'fs.inotify.max_user_watches=524288' | sudo tee -a /etc/sysctl.conf
+grep 'fs.inotify.max_user_instances=512' /etc/sysctl.conf \
+    || echo 'fs.inotify.max_user_instances=512' | sudo tee -a /etc/sysctl.conf
 
-grep 'DefaultLimitNOFILE=256000' /etc/systemd/system.conf \
-    || echo 'DefaultLimitNOFILE=256000' | sudo tee -a /etc/systemd/system.conf
-grep 'DefaultLimitNOFILE=256000' /etc/systemd/user.conf \
-    || echo 'DefaultLimitNOFILE=256000' | sudo tee -a /etc/systemd/user.conf
+grep 'DefaultLimitNOFILE=2097152' /etc/systemd/system.conf \
+    || echo 'DefaultLimitNOFILE=2097152' | sudo tee -a /etc/systemd/system.conf
+grep 'DefaultLimitNOFILE=2097152' /etc/systemd/user.conf \
+    || echo 'DefaultLimitNOFILE=2097152' | sudo tee -a /etc/systemd/user.conf
 ```
 
-*NOTE: You'll need to log out and log back in for these changes to be applied, since any active sessions will remember the values they started with.*
+*NOTE: You'll need to restart your machine for some of these changes to be applied.*
 
-Verify with `ulimit -a`, or specifically with `ulimit -Sn`, and `ulimit -Hn`.
+Verify with `ulimit -a`. Optionally feel free to check values within `ls /proc/sys/` for additional info.
 
 2. Install [Docker Engine](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository). We need the Docker Engine to run containerized apps in dev.
 
