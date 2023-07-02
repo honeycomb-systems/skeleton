@@ -1,0 +1,43 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: kiali-home-arpa
+  namespace: network-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "kiali.home.arpa"
+    tls:
+      httpsRedirect: true
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - "kiali.home.arpa"
+    tls:
+      mode: SIMPLE
+      credentialName: istio-ca-root-cert
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: kiali-home-arpa
+  namespace: network-system
+spec:
+  hosts:
+  - "kiali.home.arpa"
+  gateways:
+  - kiali-home-arpa
+  http:
+  - route:
+    - destination:
+        host: kiali.network-metrics.svc.cluster.local
+        port:
+          number: 20001

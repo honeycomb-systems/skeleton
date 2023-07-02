@@ -4,6 +4,23 @@ metadata:
   name: identity
   labels:
     name: identity
+    istio-injection: disabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: network-metrics
+  labels:
+    name: network-metrics
+    istio-injection: enabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: network-system
+  labels:
+    name: network-system
+    istio-injection: disabled
 ---
 apiVersion: v1
 kind: Namespace
@@ -11,13 +28,7 @@ metadata:
   name: secrets
   labels:
     name: secrets
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: storage-operator
-  labels:
-    name: storage-operator
+    istio-injection: disabled
 ---
 apiVersion: v1
 kind: Namespace
@@ -25,3 +36,12 @@ metadata:
   name: storage-main
   labels:
     name: storage-main
+    istio-injection: disabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: storage-operator
+  labels:
+    name: storage-operator
+    istio-injection: disabled

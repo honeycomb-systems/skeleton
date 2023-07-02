@@ -121,6 +121,12 @@ sudo apt-get install -y kubectl
     - `sudo mv yq_linux_amd64 /usr/local/bin/yq`
     - `popd`
 
+14. [Optional] Install [Istioctl](https://istio.io/latest/docs/setup/install/istioctl/). This will make it easier to develop network solutions.
+    - `pushd /tmp`
+    - `curl -L https://istio.io/downloadIstio | sh -`
+    - `find ./istio-* -name istioctl 2> /dev/null | xargs -I {} sudo cp {} /usr/local/bin/istioctl'`
+    - `popd`
+
 ## Appendix
 
 ### Create a dev k8s cluster
