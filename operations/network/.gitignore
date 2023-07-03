@@ -1,0 +1,7 @@
+
+# Ignore downloaded Helm charts
+*.tgz
+
+# Ignore source Helm chart
+helm/
+

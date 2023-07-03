@@ -25,15 +25,17 @@ def identity_keycloak():
 def network_istio():
     # Deploy to k8s
     k8s_yaml(kustomize('./operations/network/istio/charts/'), allow_duplicates=True)
-    k8s_yaml(kustomize('./operations/network/jaeger/charts/'), allow_duplicates=True)
-    k8s_yaml(kustomize('./operations/network/kiali/charts/'), allow_duplicates=True)
-    k8s_yaml(kustomize('./operations/network/prometheus/charts/'), allow_duplicates=True)
     k8s_yaml(kustomize('./operations/network/metallb/charts/'), allow_duplicates=True)
+
+    #k8s_yaml(kustomize('./operations/network/jaeger/charts/'), allow_duplicates=True)
+    k8s_yaml(kustomize('./operations/network/kiali/charts/'), allow_duplicates=True)
+    #k8s_yaml(kustomize('./operations/network/prometheus/charts/'), allow_duplicates=True)
 
     # Deploy sites
     k8s_yaml(['./operations/network/kiali/charts/kiali.home.arpa.yaml'], allow_duplicates=True)
 
     # Setup port-forward
+    k8s_resource(workload='istio-ingressgateway', port_forwards='15021:15021')
     k8s_resource(workload='istio-ingressgateway', port_forwards='1234:443')
 
 
@@ -77,8 +79,10 @@ docker_prune_settings(disable=False, max_age_mins=120, num_builds=3, keep_recent
 
 # Deploy operations applications, and watch/reload as changes are saved
 operations()
-identity_keycloak()
+
 network_istio()
+
+identity_keycloak()
 secrets_vault()
 storage_minio_operator()
 storage_tenants()

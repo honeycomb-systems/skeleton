@@ -12,7 +12,8 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "kiali.home.arpa"
+    - "*"
+    #- "kiali.home.arpa"
     tls:
       httpsRedirect: true
   - port:
@@ -20,7 +21,8 @@ spec:
       name: https
       protocol: HTTPS
     hosts:
-    - "kiali.home.arpa"
+    - "*"
+    #- "kiali.home.arpa"
     tls:
       mode: SIMPLE
       credentialName: istio-ca-root-cert
@@ -32,7 +34,8 @@ metadata:
   namespace: network-system
 spec:
   hosts:
-  - "kiali.home.arpa"
+  - "*"
+  #- "kiali.home.arpa"
   gateways:
   - kiali-home-arpa
   http:

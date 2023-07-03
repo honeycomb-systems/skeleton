@@ -8,7 +8,7 @@ Manage access to secrets and protect sensitive data
 1. Generate Istio manifests
     - `mkdir -p ./istio/charts/`
     - `pushd ./istio/charts/`
-    - `istioctl manifest generate > ./istio.yaml`
+    - `istioctl manifest generate --set profile=default > ./istio.yaml`
     - `popd`
 
 2. Get plugins for the current version of Istio
