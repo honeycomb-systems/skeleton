@@ -33,10 +33,17 @@ Before you can follow the quickstart guide, you'll need to complete the [prerequ
 3. Set your local context
     - `kubectl config set-context kind-kind`
 
-4. Start Tilt:
+4. Configure the network for [metallb ipvs](https://metallb.org/installation/)
+```
+kubectl get configmap kube-proxy -n kube-system -o yaml | \
+sed -e "s/strictARP: false/strictARP: true/" | \
+kubectl apply -f - -n kube-system
+```
+
+5. Start Tilt:
     - `tilt up --file Tiltfile.operations`
 
-5. Visit local environments, make changes, and refresh these pages after builds deploy through Tilt:
+6. Visit local environments, make changes, and refresh these pages after builds deploy through Tilt:
     - [identity/keycloak](http://localhost:8080/)
 
 
