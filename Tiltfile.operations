@@ -32,7 +32,7 @@ def network_istio():
     #k8s_yaml(kustomize('./operations/network/prometheus/charts/'), allow_duplicates=True)
 
     # Deploy sites
-    k8s_yaml(['./operations/network/kiali/charts/kiali.home.arpa.yaml'], allow_duplicates=True)
+    #k8s_yaml(['./operations/network/kiali/charts/kiali.home.arpa.yaml'], allow_duplicates=True)
 
     # Setup port-forward
     k8s_resource(workload='istio-ingressgateway', port_forwards='15021:15021')
