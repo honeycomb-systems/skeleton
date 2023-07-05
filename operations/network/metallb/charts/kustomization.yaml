@@ -1,4 +1,4 @@
-namespace: network-system
+namespace: network
 resources:
   - metallb-native.yaml
   - metallb-conf.yaml

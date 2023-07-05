@@ -8,7 +8,7 @@ Enable a service mesh and network proxy for services running in the k8s cluster.
 1. Generate Istio manifests
     - `mkdir -p ./istio/charts/`
     - `pushd ./istio/charts/`
-    - `istioctl manifest generate --set profile=default --set values.global.istioNamespace=network-system > ./istio.yaml`
+    - `istioctl manifest generate --set profile=default --set values.global.istioNamespace=network > ./istio.yaml`
     - `popd`
 
 2. Get the chart for a [Kind k8s cluster load balancer](https://kind.sigs.k8s.io/docs/user/loadbalancer/)
@@ -27,6 +27,6 @@ Enable a service mesh and network proxy for services running in the k8s cluster.
     - `kubectl apply -k ./istio/charts/`
 
 5. Visit sites from the local load balancer:
-    - `kubectl -n network-system get services`
+    - `kubectl -n network get services`
     - Assuming load balancer IP is `172.18.255.201`, visit [https://172.18.255.201/](https://172.18.255.201/)
         + Note that this will only work if you have a site configured with an Istio Gateway + VirtualService
