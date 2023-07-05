@@ -3,6 +3,7 @@
 
 Before you can follow the quickstart guide, you'll need to complete the [prerequisites](./PREREQUISITES.md) for setting up your local dev environment.
 
+
 ## Examples
 
 1. Create a new image registry:
@@ -21,6 +22,7 @@ Before you can follow the quickstart guide, you'll need to complete the [prerequ
     - [express-hello-world](http://localhost:3000/)
     - [flask-hello-world](http://localhost:3001/)
     - [go-hello-world](http://localhost:3002/)
+
 
 ## Operations
 
