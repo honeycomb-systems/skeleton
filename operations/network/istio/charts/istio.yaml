@@ -7233,7 +7233,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: istio-ingressgateway-service-account
-  namespace: istio-system
+  namespace: network-system
   labels:
     app: istio-ingressgateway
     istio: ingressgateway
@@ -7246,7 +7246,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: istio-reader-service-account
-  namespace: istio-system
+  namespace: network-system
   labels:
     app: istio-reader
     release: istio
@@ -7255,7 +7255,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: istiod
-  namespace: istio-system
+  namespace: network-system
   labels:
     app: istiod
     release: istio
@@ -7264,7 +7264,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: istiod-service-account
-  namespace: istio-system
+  namespace: network-system
   labels:
     app: istiod
     release: istio
@@ -7272,7 +7272,7 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: istio-reader-clusterrole-istio-system
+  name: istio-reader-clusterrole-network-system
   labels:
     app: istio-reader
     release: istio
@@ -7316,7 +7316,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: istio-reader-istio-system
+  name: istio-reader-network-system
   labels:
     app: istio-reader
     release: istio
@@ -7360,7 +7360,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: istiod-clusterrole-istio-system
+  name: istiod-clusterrole-network-system
   labels:
     app: istiod
     release: istio
@@ -7455,7 +7455,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: istiod-gateway-controller-istio-system
+  name: istiod-gateway-controller-network-system
   labels:
     app: istiod
     release: istio
@@ -7473,7 +7473,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: istiod-istio-system
+  name: istiod-network-system
   labels:
     app: istiod
     release: istio
@@ -7580,87 +7580,87 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: istio-reader-clusterrole-istio-system
+  name: istio-reader-clusterrole-network-system
   labels:
     app: istio-reader
     release: istio
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: istio-reader-clusterrole-istio-system
+  name: istio-reader-clusterrole-network-system
 subjects:
   - kind: ServiceAccount
     name: istio-reader-service-account
-    namespace: istio-system
+    namespace: network-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: istio-reader-istio-system
+  name: istio-reader-network-system
   labels:
     app: istio-reader
     release: istio
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: istio-reader-istio-system
+  name: istio-reader-network-system
 subjects:
   - kind: ServiceAccount
     name: istio-reader-service-account
-    namespace: istio-system
+    namespace: network-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: istiod-clusterrole-istio-system
+  name: istiod-clusterrole-network-system
   labels:
     app: istiod
     release: istio
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: istiod-clusterrole-istio-system
+  name: istiod-clusterrole-network-system
 subjects:
   - kind: ServiceAccount
     name: istiod
-    namespace: istio-system
+    namespace: network-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: istiod-gateway-controller-istio-system
+  name: istiod-gateway-controller-network-system
   labels:
     app: istiod
     release: istio
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: istiod-gateway-controller-istio-system
+  name: istiod-gateway-controller-network-system
 subjects:
 - kind: ServiceAccount
   name: istiod
-  namespace: istio-system
+  namespace: network-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: istiod-istio-system
+  name: istiod-network-system
   labels:
     app: istiod
     release: istio
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: istiod-istio-system
+  name: istiod-network-system
 subjects:
   - kind: ServiceAccount
     name: istiod-service-account
-    namespace: istio-system
+    namespace: network-system
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: istio-validator-istio-system
+  name: istio-validator-network-system
   labels:
     app: istiod
     release: istio
@@ -7674,7 +7674,7 @@ webhooks:
       # Should change from base but cannot for API compat
       service:
         name: istiod
-        namespace: istio-system
+        namespace: network-system
         path: "/validate"
     rules:
       - operations:
@@ -7706,7 +7706,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: istio
-  namespace: istio-system
+  namespace: network-system
   labels:
     istio.io/rev: default
     install.operator.istio.io/owning-resource: unknown
@@ -7720,23 +7720,23 @@ data:
 
   mesh: |-
     defaultConfig:
-      discoveryAddress: istiod.istio-system.svc:15012
+      discoveryAddress: istiod.network-system.svc:15012
       proxyMetadata: {}
       tracing:
         zipkin:
-          address: zipkin.istio-system:9411
+          address: zipkin.network-system:9411
     defaultProviders:
       metrics:
       - prometheus
     enablePrometheusMerge: true
-    rootNamespace: istio-system
+    rootNamespace: network-system
     trustDomain: cluster.local
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: istio-sidecar-injector
-  namespace: istio-system
+  namespace: network-system
   labels:
     istio.io/rev: default
     install.operator.istio.io/owning-resource: unknown
@@ -7767,7 +7767,7 @@ data:
         "hub": "docker.io/istio",
         "imagePullPolicy": "",
         "imagePullSecrets": [],
-        "istioNamespace": "istio-system",
+        "istioNamespace": "network-system",
         "istiod": {
           "enableAnalysis": false
         },
@@ -7783,7 +7783,7 @@ data:
           "clusterName": "",
           "enabled": false
         },
-        "namespace": "istio-system",
+        "namespace": "network-system",
         "network": "",
         "omitSidecarInjectorConfigMap": false,
         "oneNamespace": false,
@@ -9568,7 +9568,7 @@ data:
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: istio-sidecar-injector
+  name: istio-sidecar-injector-network-system
   labels:
     istio.io/rev: default
     install.operator.istio.io/owning-resource: unknown
@@ -9580,7 +9580,7 @@ webhooks:
   clientConfig:
     service:
       name: istiod
-      namespace: istio-system
+      namespace: network-system
       path: "/inject"
       port: 443
   sideEffects: None
@@ -9609,7 +9609,7 @@ webhooks:
   clientConfig:
     service:
       name: istiod
-      namespace: istio-system
+      namespace: network-system
       path: "/inject"
       port: 443
   sideEffects: None
@@ -9640,7 +9640,7 @@ webhooks:
   clientConfig:
     service:
       name: istiod
-      namespace: istio-system
+      namespace: network-system
       path: "/inject"
       port: 443
   sideEffects: None
@@ -9667,7 +9667,7 @@ webhooks:
   clientConfig:
     service:
       name: istiod
-      namespace: istio-system
+      namespace: network-system
       path: "/inject"
       port: 443
   sideEffects: None
@@ -9697,7 +9697,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: istio-ingressgateway
-  namespace: istio-system
+  namespace: network-system
   labels:
     app: istio-ingressgateway
     istio: ingressgateway
@@ -9719,9 +9719,6 @@ spec:
       labels:
         app: istio-ingressgateway
         istio: ingressgateway
-        heritage: Tiller
-        release: istio
-        chart: gateways
         service.istio.io/canonical-name: istio-ingressgateway
         service.istio.io/canonical-revision: latest
         istio.io/rev: default
@@ -9792,7 +9789,7 @@ spec:
           - name: PILOT_CERT_PROVIDER
             value: istiod
           - name: CA_ADDR
-            value: istiod.istio-system.svc:15012
+            value: istiod.network-system.svc:15012
           - name: NODE_NAME
             valueFrom:
               fieldRef:
@@ -9829,7 +9826,7 @@ spec:
           - name: ISTIO_META_WORKLOAD_NAME
             value: istio-ingressgateway
           - name: ISTIO_META_OWNER
-            value: kubernetes://apis/apps/v1/namespaces/istio-system/deployments/istio-ingressgateway
+            value: kubernetes://apis/apps/v1/namespaces/network-system/deployments/istio-ingressgateway
           - name: ISTIO_META_MESH_ID
             value: "cluster.local"
           - name: TRUST_DOMAIN
@@ -9919,7 +9916,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: istiod
-  namespace: istio-system
+  namespace: network-system
   labels:
     app: istiod
     istio.io/rev: default
@@ -10009,7 +10006,7 @@ spec:
           - name: PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_INBOUND
             value: "true"
           - name: ISTIOD_ADDR
-            value: istiod.istio-system.svc:15012
+            value: istiod.network-system.svc:15012
           - name: PILOT_ENABLE_ANALYSIS
             value: "false"
           - name: CLUSTER_ID
@@ -10086,7 +10083,7 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: istio-ingressgateway
-  namespace: istio-system
+  namespace: network-system
   labels:
     app: istio-ingressgateway
     istio: ingressgateway
@@ -10105,7 +10102,7 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: istiod
-  namespace: istio-system
+  namespace: network-system
   labels:
     app: istiod
     istio.io/rev: default
@@ -10124,7 +10121,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: istio-ingressgateway-sds
-  namespace: istio-system
+  namespace: network-system
   labels:
     release: istio
     istio.io/rev: default
@@ -10139,7 +10136,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: istiod
-  namespace: istio-system
+  namespace: network-system
   labels:
     app: istiod
     release: istio
@@ -10164,8 +10161,8 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: istiod-istio-system
-  namespace: istio-system
+  name: istiod-network-system
+  namespace: network-system
   labels:
     app: istiod
     release: istio
@@ -10183,7 +10180,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: istio-ingressgateway-sds
-  namespace: istio-system
+  namespace: network-system
   labels:
     release: istio
     istio.io/rev: default
@@ -10201,7 +10198,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: istiod
-  namespace: istio-system
+  namespace: network-system
   labels:
     app: istiod
     release: istio
@@ -10212,30 +10209,30 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: istiod
-    namespace: istio-system
+    namespace: network-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: istiod-istio-system
-  namespace: istio-system
+  name: istiod-network-system
+  namespace: network-system
   labels:
     app: istiod
     release: istio
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: istiod-istio-system
+  name: istiod-network-system
 subjects:
   - kind: ServiceAccount
     name: istiod-service-account
-    namespace: istio-system
+    namespace: network-system
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: istio-ingressgateway
-  namespace: istio-system
+  namespace: network-system
   labels:
     app: istio-ingressgateway
     istio: ingressgateway
@@ -10262,7 +10259,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: istiod
-  namespace: istio-system
+  namespace: network-system
   labels:
     app: istiod
     release: istio
@@ -10288,7 +10285,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: istio-ingressgateway
-  namespace: istio-system
+  namespace: network-system
   annotations:
   labels:
     app: istio-ingressgateway
@@ -10323,7 +10320,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: istiod
-  namespace: istio-system
+  namespace: network-system
   labels:
     istio.io/rev: default
     install.operator.istio.io/owning-resource: unknown
