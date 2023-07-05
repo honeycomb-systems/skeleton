@@ -24,43 +24,31 @@ Before you can follow the quickstart guide, you'll need to complete the [prerequ
 
 ## Operations
 
-1. Install the CNI network plugins on the host OS:
-    - `sudo mkdir -p /opt/cni/bin`
-    - `sudo chown -R "$(id -u):$(id -g)" /opt/cni`
-    - `pushd /tmp`
-    - `curl -O -L https://github.com/containernetworking/plugins/releases/download/v1.2.0/cni-plugins-linux-amd64-v1.2.0.tgz`
-    - `tar -C /opt/cni/bin -xzf cni-plugins-linux-amd64-v1.2.0.tgz`
-    - `rm cni-plugins-linux-amd64-v1.2.0.tgz`
-    - `popd`
-
-2. Create a new image registry:
+1. Create a new image registry:
     - `ctlptl create registry ctlptl-registry --port=5005`
 
-3. Create your dev cluster, referencing your local image registry:
+2. Create your dev cluster, referencing your local image registry:
     - `ctlptl apply -f ctlptl-cluster.yaml`
 
-4. Set your local context
+3. Set your local context
     - `kubectl config set-context kind-kind`
 
-5. Install the [Flannel CNI](https://github.com/flannel-io/flannel#getting-started-on-kubernetes)
-    - `kubectl create ns kube-flannel`
-    - `kubectl label --overwrite ns kube-flannel pod-security.kubernetes.io/enforce=privileged`
-    - `helm repo add flannel https://flannel-io.github.io/flannel/`
-    - `helm upgrade -i flannel --set podCidr="10.96.0.0/16" --set flannel.backend="host-gw" --namespace kube-flannel flannel/flannel`
-    - `kubectl -n kube-system rollout restart deployment coredns`
-
-6. Configure the network for [metallb ipvs](https://metallb.org/installation/)
+4. Configure the network for [metallb ipvs](https://metallb.org/installation/)
 ```
 kubectl get configmap kube-proxy -n kube-system -o yaml | \
 sed -e "s/strictARP: false/strictARP: true/" | \
 kubectl apply -f - -n kube-system
 ```
 
-7. Start Tilt:
+5. Start Tilt:
     - `tilt up --file Tiltfile.operations`
 
-8. Visit local environments, make changes, and refresh these pages after builds deploy through Tilt:
+6. Visit local environments, make changes, and refresh these pages after builds deploy through Tilt:
     - [identity/keycloak](http://localhost:8080/)
+    - [network/istio](http://localhost:8443/)
+    - [secrets/vault](http://localhost:8200/)
+    - [storage/minio operator](http://localhost:9090/)
+    - [storage/minio tenant](http://localhost:9443/)
 
 
 ## Cleanup

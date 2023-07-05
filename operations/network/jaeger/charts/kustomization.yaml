@@ -1,3 +1,0 @@
-namespace: network-metrics
-resources:
-  - jaeger.yaml

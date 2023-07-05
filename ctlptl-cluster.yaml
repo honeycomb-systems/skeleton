@@ -10,25 +10,13 @@ kindV1Alpha4Cluster:
   networking:
     apiServerAddress: 127.0.0.1
     apiServerPort: 6443
-    disableDefaultCNI: true
+    ipFamily: ipv4
     kubeProxyMode: "ipvs"
     podSubnet: "10.96.0.0/16"
     serviceSubnet: "10.98.0.0/16"
   nodes:
   - role: control-plane
-    extraMounts:
-    - hostPath: /opt/cni/bin
-      containerPath: /opt/cni/bin
   - role: worker
-    extraMounts:
-    - hostPath: /opt/cni/bin
-      containerPath: /opt/cni/bin
   - role: worker
-    extraMounts:
-    - hostPath: /opt/cni/bin
-      containerPath: /opt/cni/bin
   - role: worker
-    extraMounts:
-    - hostPath: /opt/cni/bin
-      containerPath: /opt/cni/bin
   
