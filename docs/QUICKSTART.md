@@ -45,7 +45,6 @@ kubectl apply -f - -n kube-system
 
 6. Visit local environments, make changes, and refresh these pages after builds deploy through Tilt:
     - [identity/keycloak](http://localhost:8080/)
-    - [network/istio](http://localhost:8443/)
     - [secrets/vault](http://localhost:8200/)
     - [storage/minio operator](http://localhost:9090/)
     - [storage/minio tenant](http://localhost:9443/)
