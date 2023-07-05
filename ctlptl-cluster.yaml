@@ -7,8 +7,16 @@ product: kind
 registry: ctlptl-registry
 kindV1Alpha4Cluster:
   name: my-cluster
+  networking:
+    apiServerAddress: 127.0.0.1
+    apiServerPort: 6443
+    ipFamily: ipv4
+    kubeProxyMode: "ipvs"
+    podSubnet: "10.96.0.0/16"
+    serviceSubnet: "10.98.0.0/16"
   nodes:
   - role: control-plane
+  - role: worker
   - role: worker
   - role: worker
   

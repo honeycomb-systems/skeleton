@@ -21,6 +21,13 @@ def identity_keycloak():
     k8s_resource(workload='keycloak', port_forwards='8080:8080')
 
 
+# Deploy Istio for network mesh and proxy
+def network_istio():
+    # Deploy to k8s
+    k8s_yaml(kustomize('./operations/network/istio/charts/'), allow_duplicates=True)
+    k8s_yaml(kustomize('./operations/network/metallb/charts/'), allow_duplicates=True)
+
+
 # Deploy Vault for secrets management
 def secrets_vault():
     # Deploy to k8s
@@ -61,6 +68,9 @@ docker_prune_settings(disable=False, max_age_mins=120, num_builds=3, keep_recent
 
 # Deploy operations applications, and watch/reload as changes are saved
 operations()
+
+network_istio()
+
 identity_keycloak()
 secrets_vault()
 storage_minio_operator()

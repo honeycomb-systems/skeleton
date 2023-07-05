@@ -1,0 +1,19 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: lb-addr-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  # This range may need to be adjusted depending on your local Docker config:
+  # `docker network inspect -f '{{.IPAM.Config}}' kind`
+  - 172.18.255.200-172.18.255.250
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: lb-addr-advertisement
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - lb-addr-pool
