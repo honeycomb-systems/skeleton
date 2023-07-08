@@ -9,7 +9,20 @@ configured under the operations/ directory.
 
 # Create namespace
 def operations():
-    k8s_yaml(['./operations/charts/namespace.yaml'])
+    # Deploy to k8s
+    local_resource(
+        'install-namespaces',
+        cmd='kubectl apply -f ./operations/charts/namespace.yaml'
+    )
+
+
+# Deploy Postgres for data & state management
+def data_postgres():
+    # Deploy to k8s
+    local_resource(
+        'install-crunchy-postgres-operator',
+        cmd='kubectl apply --server-side -k ./operations/data/postgres-operator/charts/default'
+    )
 
 
 # Deploy Keycloak for identity & access management
@@ -69,6 +82,7 @@ docker_prune_settings(disable=False, max_age_mins=120, num_builds=3, keep_recent
 # Deploy operations applications, and watch/reload as changes are saved
 operations()
 
+data_postgres()
 network_istio()
 
 identity_keycloak()
