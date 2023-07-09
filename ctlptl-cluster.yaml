@@ -19,4 +19,3 @@ kindV1Alpha4Cluster:
   - role: worker
   - role: worker
   - role: worker
-  

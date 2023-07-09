@@ -37,7 +37,7 @@ spec:
             - ReadWriteOnce
           resources:
             requests:
-              storage: 10Gi
+              storage: 1Gi
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -52,6 +52,8 @@ spec:
   requestAutoCert: true
   features:
     bucketDNS: false
+  buckets:
+    - name: example-storage-bucket
   podManagementPolicy: Parallel
   prometheusOperator: false
   logging:

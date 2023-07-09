@@ -44,11 +44,24 @@ kubectl apply -f - -n kube-system
 
 5. Start Tilt:
     - `tilt up --file Tiltfile.operations`
+        - You will need to initialize Vault, by following the [Secrets README](../operations/secrets/README.md)
 
 6. Visit local environments, make changes, and refresh these pages after builds deploy through Tilt:
     - [identity/keycloak](http://localhost:8080/)
     - [secrets/vault](http://localhost:8200/)
-    - [storage/minio operator](http://localhost:9090/)
+    - [storage/minio](http://localhost:9090/)
+
+
+## Operations Examples
+
+1. Run the [Operations quickstart](#Operations), and after `tilt up --file Tiltfile.operations`, wait for all apps and services to deploy
+
+2. After everything is running, use `[CTRL]` + `[C]` to stop Tilt. Your operations services will still be running in your local k8s cluster, though they'll no longer automatically sync.
+
+3. Start Tilt to sync the operations examples:
+    - `tilt up --file Tiltfile.operations-examples`
+
+4. Visit local environments, make changes, and refresh these pages after builds deploy through Tilt:
     - [storage/minio tenant](http://localhost:9443/)
 
 

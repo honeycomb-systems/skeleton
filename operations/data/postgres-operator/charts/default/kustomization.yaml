@@ -1,4 +1,4 @@
-namespace: data-operator
+namespace: data
 
 commonLabels:
   app.kubernetes.io/name: pgo

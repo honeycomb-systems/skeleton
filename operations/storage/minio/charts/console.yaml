@@ -4,14 +4,14 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: console-sa
-  namespace: storage-operator
+  namespace: storage
 ---
 # Source: operator/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: minio-operator
-  namespace: storage-operator
+  namespace: storage
   labels:
 
     helm.sh/chart: operator-5.0.5
@@ -25,7 +25,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: console-sa-secret
-  namespace: storage-operator
+  namespace: storage
   annotations:
     kubernetes.io/service-account.name: console-sa
 type: kubernetes.io/service-account-token
@@ -38,7 +38,7 @@ data:
 kind: ConfigMap
 metadata:
   name: console-env
-  namespace: storage-operator
+  namespace: storage
 ---
 # Source: operator/templates/minio.min.io_tenants.yaml
 apiVersion: apiextensions.k8s.io/v1
@@ -4147,7 +4147,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: minio-operator
-    namespace: storage-operator
+    namespace: storage
 ---
 # Source: operator/templates/console-ui.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -4161,14 +4161,14 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: console-sa
-    namespace: storage-operator
+    namespace: storage
 ---
 # Source: operator/templates/console-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: "console"
-  namespace: storage-operator
+  namespace: storage
   labels:
     helm.sh/chart: operator-5.0.5
     app.kubernetes.io/name: operator
@@ -4190,7 +4190,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: "operator"
-  namespace: storage-operator
+  namespace: storage
   labels:
     helm.sh/chart: operator-5.0.5
     app.kubernetes.io/name: operator
@@ -4212,7 +4212,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: "sts"
-  namespace: storage-operator
+  namespace: storage
   labels:
     helm.sh/chart: operator-5.0.5
     app.kubernetes.io/name: operator
@@ -4233,7 +4233,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "console"
-  namespace: storage-operator
+  namespace: storage
   labels:
     helm.sh/chart: operator-5.0.5
     app.kubernetes.io/name: operator
@@ -4281,7 +4281,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "minio-operator"
-  namespace: storage-operator
+  namespace: storage
   labels:
     helm.sh/chart: operator-5.0.5
     app.kubernetes.io/name: operator

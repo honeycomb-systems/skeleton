@@ -13,7 +13,7 @@ PGO, the Postgres Operator from Crunchy Data, gives you a declarative Postgres s
     - `popd`
     - `mkdir -p postgres-operator/`
     - `mv /tmp/postgres-operator-examples/kustomize/install postgres-operator/charts`
-    - `sed -i 's/namespace: postgres-operator/namespace: data-operator/g' postgres-operator/charts/default/kustomization.yaml`
+    - `sed -i 's/namespace: postgres-operator/namespace: data/g' postgres-operator/charts/default/kustomization.yaml`
     - `rm -rf postgres-operator/charts/namespace`
     - `rm -rf postgres-operator/charts/singlenamespace`
 
