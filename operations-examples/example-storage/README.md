@@ -21,7 +21,16 @@ mkdir -p tenants/example-storage/charts
 pushd helm/tenant
 helm template example-storage . \
     --namespace example-storage \
+    --set tenant.pools[0].containerSecurityContext.runAsGroup=1000 \
+    --set tenant.pools[0].containerSecurityContext.runAsNonRoot=true \
+    --set tenant.pools[0].containerSecurityContext.runAsUser=1000 \
+    --set tenant.pools[0].name='pool-0' \
+    --set tenant.pools[0].securityContext.fsGroup=1000 \
+    --set tenant.pools[0].securityContext.runAsGroup=1000 \
+    --set tenant.pools[0].securityContext.runAsNonRoot=true \
+    --set tenant.pools[0].securityContext.runAsUser=1000 \
     --set tenant.pools[0].size='1Gi' \
+    --set tenant.pools[0].storageClassName=standard \
     --set-string tenant.buckets[0].name=example-storage-bucket \
     > ../../charts/example-storage.yaml
 popd
