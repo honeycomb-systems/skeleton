@@ -20,9 +20,9 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: data-operator
+  name: data
   labels:
-    name: data-operator
+    name: data
     istio-injection: disabled
     pod-security.kubernetes.io/enforce: privileged
     pod-security.kubernetes.io/audit: privileged
@@ -39,15 +39,7 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: storage-main
+  name: storage
   labels:
-    name: storage-main
-    istio-injection: disabled
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: storage-operator
-  labels:
-    name: storage-operator
+    name: storage
     istio-injection: disabled

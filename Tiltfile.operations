@@ -51,25 +51,12 @@ def secrets_vault():
 
 
 # Deploy Minio Operator for S3 compatible storage
-def storage_minio_operator():
+def storage_minio():
     # Deploy to k8s
     k8s_yaml(['./operations/storage/minio/charts/console.yaml'])
 
     # Setup port-forward
     k8s_resource(workload='console', port_forwards='9090:9090')
-
-
-# Deploy Minio tenants for S3 compatible storage
-def storage_tenants():
-    # Deploy to k8s
-    k8s_yaml(kustomize('./operations/storage/tenants/storage-main/charts/'))
-
-    # TODO: Tilt.dev can't find this, need to setup proxy
-    # and limit the number of port-forwards required, as well
-    # as gain more granular control over what to forward to
-
-    # Setup port-forward
-    # k8s_resource(workload='myminio-console', port_forwards='9443:9443')
 
 
 # Load Tilt extensions:
@@ -87,5 +74,4 @@ network_istio()
 
 identity_keycloak()
 secrets_vault()
-storage_minio_operator()
-storage_tenants()
+storage_minio()

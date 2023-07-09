@@ -1,0 +1,42 @@
+
+print("""
+-----------------------------------------------------------------
+Hello honeycomb-systems/skeleton! Tilt is evaluating the services
+configured under the operations-examples/ directory.
+-----------------------------------------------------------------
+""".strip())
+
+
+# Create namespace
+def operations_examples():
+    # Deploy to k8s
+    local_resource(
+        'install-namespaces',
+        cmd='kubectl apply -f ./operations-examples/charts/namespace.yaml'
+    )
+
+
+# Deploy Minio tenants for S3 compatible storage
+def storage_tenants():
+    # Deploy to k8s
+    k8s_yaml(kustomize('./operations-examples/example-storage/charts/'))
+
+    # TODO: Tilt.dev can't find this, need to setup proxy
+    # and limit the number of port-forwards required, as well
+    # as gain more granular control over what to forward to
+
+    # Setup port-forward
+    #k8s_resource(workload='minio', port_forwards='9443:9443')
+
+
+# Load Tilt extensions:
+load('ext://git_resource', 'git_checkout')
+
+# Prune old Docker images
+docker_prune_settings(disable=False, max_age_mins=120, num_builds=3, keep_recent=2)
+
+
+# Deploy operations applications, and watch/reload as changes are saved
+operations_examples()
+
+storage_tenants()
