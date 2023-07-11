@@ -16,8 +16,8 @@ def operations_examples():
     )
 
 
-# Deploy Minio tenants for S3 compatible storage
-def storage_tenants():
+# Deploy example minio tenant for S3 compatible storage
+def example_storage():
     # Deploy to k8s
     k8s_yaml(kustomize('./operations-examples/example-storage/charts/'))
 
@@ -27,6 +27,12 @@ def storage_tenants():
 
     # Setup port-forward
     #k8s_resource(workload='minio', port_forwards='9443:9443')
+
+
+# Deploy example Postgres cluster with backups to MinIO bucket
+def example_database():
+    # Deploy to k8s
+    k8s_yaml(kustomize('./operations-examples/example-database/charts/'))
 
 
 # Load Tilt extensions:
@@ -39,4 +45,5 @@ docker_prune_settings(disable=False, max_age_mins=120, num_builds=3, keep_recent
 # Deploy operations applications, and watch/reload as changes are saved
 operations_examples()
 
-storage_tenants()
+example_database()
+example_storage()

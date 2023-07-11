@@ -127,6 +127,26 @@ sudo apt-get install -y kubectl
     - `find ./istio-* -name istioctl 2> /dev/null | xargs -I {} sudo cp {} /usr/local/bin/istioctl'`
     - `popd`
 
+15. [Optional] Install [MinIO mc](https://min.io/docs/minio/linux/reference/minio-mc.html). This will make it easier to develop with MinIO S3-compatible object storage.
+    - `pushd /tmp`
+    - `curl https://dl.min.io/client/mc/release/linux-amd64/mc -o mc`
+    - `chmod +x mc`
+    - `sudo mv mc /usr/local/bin/mc`
+    - `popd`
+
+    Usage:
+        - `kubectl -n example-storage port-forward service/myminio-hl 9000:9000`
+        - `kubectl -n example-storage port-forward service/myminio-console 9443:9443`
+        - `mc --insecure alias set myminio https://localhost:9000 minio minio123`
+        - `echo "hello minio" > hellominio`
+        - `mc --insecure cp ./hellominio myminio/example-database-backup/`
+        - After this, you should be able to see the object in your [example-storage](https://localhost:9443/example-storage) bucket
+
+    Administration:
+        - `mc alias ls`
+        - `mc alias rm myminio`
+        - `mc alias rm local`
+
 ## Appendix
 
 ### Create a dev k8s cluster

@@ -1,6 +1,14 @@
 apiVersion: v1
 kind: Namespace
 metadata:
+  name: example-database
+  labels:
+    name: example-database
+    istio-injection: disabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
   name: example-storage
   labels:
     name: example-storage
