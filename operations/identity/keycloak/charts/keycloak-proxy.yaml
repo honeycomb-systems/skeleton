@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak-nodeport
+  labels:
+    app: keycloak-nodeport
+spec:
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: keycloak
+  type: NodePort
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: keycloak-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "identity.home.arpa"
+    tls:
+      httpsRedirect: true
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - "identity.home.arpa"
+    tls:
+      mode: SIMPLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: keycloak-virtualservice
+spec:
+  hosts:
+  - "identity.home.arpa"
+  gateways:
+  - keycloak-gateway
+  http:
+  - route:
+    - destination:
+        host: keycloak-nodeport
+        port:
+          number: 8080

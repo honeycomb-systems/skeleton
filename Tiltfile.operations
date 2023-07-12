@@ -30,9 +30,6 @@ def identity_keycloak():
     # Deploy to k8s
     k8s_yaml(kustomize('./operations/identity/keycloak/charts/'))
 
-    # Setup port-forward
-    k8s_resource(workload='keycloak', port_forwards='8080:8080')
-
 
 # Deploy Istio for network mesh and proxy
 def network_istio():
@@ -46,17 +43,11 @@ def secrets_vault():
     # Deploy to k8s
     k8s_yaml(kustomize('./operations/secrets/vault/charts/'))
 
-    # Setup port-forward
-    k8s_resource(workload='vault', port_forwards='8200:8200')
-
 
 # Deploy Minio Operator for S3 compatible storage
 def storage_minio():
     # Deploy to k8s
-    k8s_yaml(['./operations/storage/minio/charts/console.yaml'])
-
-    # Setup port-forward
-    k8s_resource(workload='console', port_forwards='9090:9090')
+    k8s_yaml(kustomize('./operations/storage/minio/charts/'), allow_duplicates=True)
 
 
 # Load Tilt extensions:

@@ -1,0 +1,4 @@
+namespace: storage
+resources:
+  - console.yaml
+  - console-proxy.yaml
