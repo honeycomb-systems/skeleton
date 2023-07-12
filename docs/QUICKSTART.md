@@ -52,12 +52,12 @@ kubectl apply -f - -n kube-system
     - `sudo hostctl add domains dev secrets.home.arpa --ip $LOAD_BALANCER_IP`
     - `sudo hostctl add domains dev storage.home.arpa --ip $LOAD_BALANCER_IP`
     - `sudo hostctl enable dev`
+    - **NOTE: you may need to edit your browser's DNS settings. If you have DNS over HTTPS enabled, these overrides may not resolve.**
 
 6. Visit local environments, make changes, and refresh these pages after builds deploy through Tilt:
     - [identity/keycloak](https://identity.home.arpa/)
     - [secrets/vault](https://secrets.home.arpa/)
     - [storage/minio](https://storage.home.arpa/)
-
 
 ## Operations Examples
 
