@@ -1,6 +1,17 @@
 namespace: identity
 resources:
   - keycloak.yaml
+  - keycloak-proxy.yaml
 
 patches:
   - path: delete-loadbalancer.yaml
+  - patch: |-
+      - op: add
+        path: "/spec/template/spec/containers/0/env/-"
+        value:
+          name: HOSTNAME
+          value: "identity.home.arpa"
+    target:
+      kind: Deployment
+      name: keycloak
+

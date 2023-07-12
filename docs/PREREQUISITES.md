@@ -104,16 +104,22 @@ sudo apt-get install -y kubectl
 10. Install [Tilt.dev](https://docs.tilt.dev/). Tilt will act as the interface to hot-reload code in our local k8s cluster as we make changes.
     - `curl -fsSL https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash`
 
-11. [Optional] Install [Node Version Manager](https://github.com/nvm-sh/nvm). This will make it easier to develop Node.js services.
+11. Install [hostctl](https://guumaster.github.io/hostctl/docs/installation/). Hostctl will let you set local DNS names to point at your k8s cluster to visit sites in your browser.
+    - `pushd /tmp`
+    - `wget https://github.com/guumaster/hostctl/releases/download/v1.1.4/hostctl_1.1.4_linux_amd64.deb -O hostctl.deb`
+    - `sudo dpkg -i ./hostctl.deb`
+    - `popd`
+
+12. [Optional] Install [Node Version Manager](https://github.com/nvm-sh/nvm). This will make it easier to develop Node.js services.
     - `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash`
     - `export NVM_DIR="$HOME/.nvm"`
     - `[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm`
     - `[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"`
 
-12. [Optional] Install [Python Venv](https://docs.python.org/3/library/venv.html). This will make it easier to develop Python services.
+13. [Optional] Install [Python Venv](https://docs.python.org/3/library/venv.html). This will make it easier to develop Python services.
     - `sudo apt-get install python3 python3-venv`
 
-13. [Optional] Install [yq](https://github.com/mikefarah/yq/#install). This will make it easier to develop YAML charts.
+14. [Optional] Install [yq](https://github.com/mikefarah/yq/#install). This will make it easier to develop YAML charts.
     - `pushd /tmp`
     - Optionally get the [latest release](https://github.com/mikefarah/yq/releases/)
     - `wget https://github.com/mikefarah/yq/releases/download/v4.34.1/yq_linux_amd64`
@@ -121,13 +127,13 @@ sudo apt-get install -y kubectl
     - `sudo mv yq_linux_amd64 /usr/local/bin/yq`
     - `popd`
 
-14. [Optional] Install [Istioctl](https://istio.io/latest/docs/setup/install/istioctl/). This will make it easier to develop network solutions.
+15. [Optional] Install [Istioctl](https://istio.io/latest/docs/setup/install/istioctl/). This will make it easier to develop network solutions.
     - `pushd /tmp`
     - `curl -L https://istio.io/downloadIstio | sh -`
     - `find ./istio-* -name istioctl 2> /dev/null | xargs -I {} sudo cp {} /usr/local/bin/istioctl'`
     - `popd`
 
-15. [Optional] Install [MinIO mc](https://min.io/docs/minio/linux/reference/minio-mc.html). This will make it easier to develop with MinIO S3-compatible object storage.
+16. [Optional] Install [MinIO mc](https://min.io/docs/minio/linux/reference/minio-mc.html). This will make it easier to develop with MinIO S3-compatible object storage.
     - `pushd /tmp`
     - `curl https://dl.min.io/client/mc/release/linux-amd64/mc -o mc`
     - `chmod +x mc`

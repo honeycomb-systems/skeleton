@@ -46,11 +46,18 @@ kubectl apply -f - -n kube-system
     - `tilt up --file Tiltfile.operations`
         - You will need to initialize Vault, by following the [Secrets README](../operations/secrets/README.md)
 
-6. Visit local environments, make changes, and refresh these pages after builds deploy through Tilt:
-    - [identity/keycloak](http://localhost:8080/)
-    - [secrets/vault](http://localhost:8200/)
-    - [storage/minio](http://localhost:9090/)
+6. After tilt shows success on most projects, create some hostnames that point at the primary load balancer:
+    - `export LOAD_BALANCER_IP=$(kubectl get service -A | grep LoadBalancer | awk '{print $5}')`
+    - `sudo hostctl add domains dev identity.home.arpa --ip $LOAD_BALANCER_IP`
+    - `sudo hostctl add domains dev secrets.home.arpa --ip $LOAD_BALANCER_IP`
+    - `sudo hostctl add domains dev storage.home.arpa --ip $LOAD_BALANCER_IP`
+    - `sudo hostctl enable dev`
+    - **NOTE: you may need to edit your browser's DNS settings. If you have DNS over HTTPS enabled, these overrides may not resolve.**
 
+6. Visit local environments, make changes, and refresh these pages after builds deploy through Tilt:
+    - [identity/keycloak](https://identity.home.arpa/)
+    - [secrets/vault](https://secrets.home.arpa/)
+    - [storage/minio](https://storage.home.arpa/)
 
 ## Operations Examples
 
@@ -78,3 +85,7 @@ kubectl apply -f - -n kube-system
 
 4. Prune dangling Docker images:
     - `docker image prune -a`
+
+5. Clean up hostnames:
+    - `sudo hostctl disable dev`
+    - `sudo hostctl remove dev`
