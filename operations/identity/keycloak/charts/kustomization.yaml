@@ -1,3 +1,6 @@
 namespace: identity
 resources:
   - keycloak.yaml
+
+patches:
+  - path: delete-loadbalancer.yaml
