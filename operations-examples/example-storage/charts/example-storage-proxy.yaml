@@ -1,0 +1,50 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: example-storage-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "example-storage.home.arpa"
+    tls:
+      httpsRedirect: true
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - "example-storage.home.arpa"
+    tls:
+      mode: SIMPLE
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: example-storage-https-destination
+spec:
+  host: myminio-console
+  trafficPolicy:
+    tls:
+      mode: SIMPLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: example-storage-virtualservice
+spec:
+  hosts:
+  - "example-storage.home.arpa"
+  gateways:
+  - example-storage-gateway
+  http:
+  - route:
+    - destination:
+        host: myminio-console
+        port:
+          number: 9443
