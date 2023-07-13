@@ -1,3 +1,4 @@
 namespace: example-storage
 resources:
   - example-storage.yaml
+  - example-storage-proxy.yaml

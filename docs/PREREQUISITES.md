@@ -153,6 +153,9 @@ sudo apt-get install -y kubectl
         - `mc alias rm myminio`
         - `mc alias rm local`
 
+17. [Optional] Install [psql](https://www.postgresql.org/docs/current/app-psql.html). This will make it easier to interact with PostgreSQL databases.
+    - `sudo apt-get install postgresql-client-14`
+
 ## Appendix
 
 ### Create a dev k8s cluster

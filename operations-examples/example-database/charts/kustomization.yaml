@@ -10,4 +10,5 @@ generatorOptions:
 
 resources:
 - example-database-backup.yaml
+- example-database-backup-proxy.yaml
 - example-database.yaml

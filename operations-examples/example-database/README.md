@@ -39,8 +39,7 @@ popd
     - `kubectl apply -k ./`
     - `popd`
 
-4. Login to the [Minio Tenant console](https://localhost:9443/)
-    - `kubectl -n example-database port-forward service/myminio-console 9443:9443`
+4. Login to the [Minio Tenant console](https://example-database-backup.home.arpa/)
     - Login with the credentials specified in `./charts/example-database-backup.yaml`
         - `export MINIO_ROOT_USER="minio"`
         - `export MINIO_ROOT_PASSWORD="minio123"`
