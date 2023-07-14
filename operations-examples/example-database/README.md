@@ -15,7 +15,7 @@ PGO, the Postgres Operator from Crunchy Data, gives you a declarative Postgres s
 
 2. Render the initial Helm charts.
 ```
-mkdir -p tenants/example-database/charts
+mkdir -p ./example-database/charts
 pushd helm/tenant
 helm template example-database-backup . \
     --namespace example-database \
@@ -45,22 +45,9 @@ popd
         - `export MINIO_ROOT_PASSWORD="minio123"`
 
 
-### Postgres Operator
-
-1. Pull the latest stable operator deployment into this repository
-    - `pushd /tmp`
-    - `git clone --depth=1 git@github.com:CrunchyData/postgres-operator-examples.git`
-    - `popd`
-    - `mkdir -p postgres-operator/`
-    - `mv /tmp/postgres-operator-examples/kustomize/install postgres-operator/charts`
-    - `sed -i 's/namespace: postgres-operator/namespace: data/g' postgres-operator/charts/default/kustomization.yaml`
-    - `rm -rf postgres-operator/charts/namespace`
-    - `rm -rf postgres-operator/charts/singlenamespace`
-
-2. Kustomize and apply the Kubernetes chart
-    - `kubectl apply --server-side -k ./postgres-operator/charts/default`
-
 ### Postgres Instance
+
+**NOTE:** This is dependent on the Postgres Operator being installed. See the [Postgres Operator README](../../operations/data/README.md).
 
 1. Kustomize and apply the Postgres instance
     - `pushd ./charts/`
