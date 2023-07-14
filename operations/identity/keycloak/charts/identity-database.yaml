@@ -1,0 +1,63 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: identity-database
+spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-15.3-0
+  postgresVersion: 15
+  instances:
+    - name: identity-database-ha1
+      replicas: 2
+      dataVolumeClaimSpec:
+        accessModes:
+        - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 1Gi
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  postgres-operator.crunchydata.com/cluster: identity-database
+                  postgres-operator.crunchydata.com/instance-set: identity-database-ha1
+  backups:
+    pgbackrest:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.45-0
+      configuration:
+      - secret:
+          name: identity-database-backup-creds
+      global:
+        repo1-path: /pgbackrest/postgres-operator/identity-database/repo1
+        repo1-s3-uri-style: path
+        repo1-retention-full: "3"
+        repo1-retention-full-type: time
+        repo1-storage-port: "9000"
+        repo1-storage-verify-tls: "n"
+        start-fast: "y"
+      repos:
+      - name: repo1
+        s3:
+          bucket: "identity-database-backup"
+          endpoint: "myminio-hl.identity-database.svc.cluster.local"
+          region: "us-west-0"
+        schedules:
+          full: "0 0 * * *"
+          incremental: "0 * * * *"
+  proxy:
+    pgBouncer:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbouncer:ubi8-1.19-0
+      replicas: 2
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  postgres-operator.crunchydata.com/cluster: identity-database
+                  postgres-operator.crunchydata.com/role: identity-database-role

@@ -1,0 +1,50 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: identity-backup-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "identity-backup.home.arpa"
+    tls:
+      httpsRedirect: true
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - "identity-backup.home.arpa"
+    tls:
+      mode: SIMPLE
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: identity-backup-https-destination
+spec:
+  host: myminio-console
+  trafficPolicy:
+    tls:
+      mode: SIMPLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: identity-backup-virtualservice
+spec:
+  hosts:
+  - "identity-backup.home.arpa"
+  gateways:
+  - identity-backup-gateway
+  http:
+  - route:
+    - destination:
+        host: myminio-console
+        port:
+          number: 9443

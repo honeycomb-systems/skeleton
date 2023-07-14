@@ -22,4 +22,5 @@ PGO, the Postgres Operator from Crunchy Data, gives you a declarative Postgres s
 
 ### Postgres Instance
 
-TODO
+**NOTE:** You can create a Postgres instance by following an example similar to this repository's [example database](../../operations-examples/example-database/README.md).
+
