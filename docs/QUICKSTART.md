@@ -44,7 +44,6 @@ kubectl apply -f - -n kube-system
 
 5. Start Tilt:
     - `tilt up --file Tiltfile.operations`
-        - You will need to initialize Vault, by following the [Secrets README](../operations/secrets/README.md)
 
 6. After tilt shows success on most projects, create some hostnames that point at the primary load balancer:
     - `export LOAD_BALANCER_IP=$(kubectl get service -A | grep LoadBalancer | awk '{print $5}')`
