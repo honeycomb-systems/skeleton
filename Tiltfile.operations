@@ -41,7 +41,7 @@ def network_istio():
 # Deploy Vault for secrets management
 def secrets_vault():
     # Deploy to k8s
-    k8s_yaml(kustomize('./operations/secrets/vault/charts/'))
+    k8s_yaml(kustomize('./operations/secrets/vault/charts/', flags=["--enable-helm"]))
 
 
 # Deploy Minio Operator for S3 compatible storage
