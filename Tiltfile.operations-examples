@@ -19,20 +19,13 @@ def operations_examples():
 # Deploy example minio tenant for S3 compatible storage
 def example_storage():
     # Deploy to k8s
-    k8s_yaml(kustomize('./operations-examples/example-storage/charts/'))
-
-    # TODO: Tilt.dev can't find this, need to setup proxy
-    # and limit the number of port-forwards required, as well
-    # as gain more granular control over what to forward to
-
-    # Setup port-forward
-    #k8s_resource(workload='minio', port_forwards='9443:9443')
+    k8s_yaml(kustomize('./operations-examples/example-storage/charts/', flags=["--enable-helm"]))
 
 
 # Deploy example Postgres cluster with backups to MinIO bucket
 def example_database():
     # Deploy to k8s
-    k8s_yaml(kustomize('./operations-examples/example-database/charts/'))
+    k8s_yaml(kustomize('./operations-examples/example-database/charts/', flags=["--enable-helm"]))
 
 
 # Load Tilt extensions:

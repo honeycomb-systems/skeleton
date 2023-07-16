@@ -68,7 +68,7 @@ kubectl apply -f - -n kube-system
 3. Start Tilt to sync the operations examples:
     - `tilt up --file Tiltfile.operations-examples`
 
-4. After tilt shows success on most projects, create some hostnames that point at the primary load balancer:
+4. After tilt shows success on most projects, create hostnames that point at the primary load balancer:
     - `export LOAD_BALANCER_IP=$(kubectl get service -A | grep LoadBalancer | awk '{print $5}')`
     - `sudo hostctl add domains dev example-database-backup.home.arpa --ip $LOAD_BALANCER_IP`
     - `sudo hostctl add domains dev example-storage.home.arpa --ip $LOAD_BALANCER_IP`
@@ -76,7 +76,8 @@ kubectl apply -f - -n kube-system
     - **NOTE: you may need to edit your browser's DNS settings. If you have DNS over HTTPS enabled, these overrides may not resolve.**
 
 5. Visit local environments, make changes, and refresh these pages after builds deploy through Tilt:
-    - [storage/minio tenant](https://example-storage.home.arpa/)
+    - [example database/backups tenant](https://example-database-backup.home.arpa/)
+    - [example storage/minio tenant](https://example-storage.home.arpa/)
 
 
 ## Cleanup
@@ -96,3 +97,4 @@ kubectl apply -f - -n kube-system
 5. Clean up hostnames:
     - `sudo hostctl disable dev`
     - `sudo hostctl remove dev`
+
