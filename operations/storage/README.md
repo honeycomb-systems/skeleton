@@ -9,24 +9,15 @@ Note that installing the MinIO operator is just a prerequisite to creating S3-ap
 
 ### Installing the Minio Operator
 
-1. Pull the latest stable [Minio operator Helm chart](https://min.io/docs/minio/kubernetes/upstream/operations/install-deploy-manage/deploy-operator-helm.html#install-operator) into this repository.
-    - `curl -O https://raw.githubusercontent.com/minio/operator/master/helm-releases/operator-5.0.5.tgz`
-    - `mkdir -p ./helm`
-    - `tar -zxvf operator-5.0.5.tgz -C helm/`
-    - `rm operator-5.0.5.tgz`
-
-2. Render the initial Helm charts.
-    - `mkdir -p minio/charts`
-    - `pushd helm/operator`
-    - `helm template minio-operator . --namespace storage > ../../minio/charts/console.yaml`
-    - `popd`
-
-3. Apply the Kubernetes chart
+1. Apply the Kubernetes chart
     - `pushd ./minio/charts/`
-    - `kubectl apply -f ./console.yaml`
+    - `kubectl apply -k ./`
     - `popd`
 
-4. Login to the [Minio Operator console](http://localhost:9090/)
+2. Login to the [Minio Operator console](https://storage.home.arpa/)
     - Use this token to login:
         - `kubectl -n storage get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode`
 
+### Reference
+
+- [Minio operator installation](https://min.io/docs/minio/kubernetes/upstream/operations/install-deploy-manage/deploy-operator-helm.html#install-operator)

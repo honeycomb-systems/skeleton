@@ -47,7 +47,7 @@ def secrets_vault():
 # Deploy Minio Operator for S3 compatible storage
 def storage_minio():
     # Deploy to k8s
-    k8s_yaml(kustomize('./operations/storage/minio/charts/'), allow_duplicates=True)
+    k8s_yaml(kustomize('./operations/storage/minio/charts/', flags=["--enable-helm"]), allow_duplicates=True)
 
 
 # Load Tilt extensions:
