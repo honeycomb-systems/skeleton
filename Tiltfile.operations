@@ -38,6 +38,12 @@ def network_istio():
     k8s_yaml(kustomize('./operations/network/metallb/charts/'), allow_duplicates=True)
 
 
+# Deploy Kyverno for policy enforcement
+def policy_kyverno():
+    # Deploy to k8s
+    k8s_yaml(kustomize('./operations/policy/kyverno/charts/', flags=["--enable-helm"]))
+
+
 # Deploy Vault for secrets management
 def secrets_vault():
     # Deploy to k8s
@@ -64,5 +70,6 @@ data_postgres()
 network_istio()
 
 identity_keycloak()
+policy_kyverno()
 secrets_vault()
 storage_minio()

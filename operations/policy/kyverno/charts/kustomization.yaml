@@ -1,0 +1,25 @@
+namespace: policy
+
+helmGlobals:
+  chartHome: helm
+
+helmCharts:
+- name: kyverno
+  valuesInline:
+    namespace: policy
+    namespaceOverride: policy
+    # TODO: create production deployment
+    #admissionController.replicas: 3
+    #backgroundController.replicas: 2
+    #cleanupController.replicas: 2
+    #reportsController.replicas: 2
+  version:
+  releaseName: kyverno
+  repo: https://kyverno.github.io/kyverno/
+- name: kyverno-policies
+  valuesInline:
+    namespace: policy
+    namespaceOverride: policy
+  version:
+  releaseName: kyverno-policies
+  repo: https://kyverno.github.io/kyverno/
