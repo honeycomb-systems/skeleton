@@ -11,3 +11,8 @@ Kyverno is a policy engine designed for Kubernetes
     - `popd`
 2. View [Kyverno reports](https://kyverno.io/docs/policy-reports/)
     - `kubectl get policyreport -A`
+
+
+## Troubleshooting
+
+Some Kyverno pods don't start up right away, it may be necessary to restart these pods in order for them to run successfully.
