@@ -34,7 +34,7 @@ def identity_keycloak():
 # Deploy Istio for network mesh and proxy
 def network_istio():
     # Deploy to k8s
-    k8s_yaml(kustomize('./operations/network/istio/charts/'), allow_duplicates=True)
+    k8s_yaml(kustomize('./operations/network/istio/charts/', flags=["--enable-helm"]), allow_duplicates=True)
     k8s_yaml(kustomize('./operations/network/metallb/charts/'), allow_duplicates=True)
 
 

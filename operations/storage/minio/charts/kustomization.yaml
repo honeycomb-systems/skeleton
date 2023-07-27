@@ -7,7 +7,6 @@ helmCharts:
 - name: operator
   valuesInline:
     namespace: storage
-  version:
   # Find the latest stable at https://github.com/minio/operator/tree/master/helm/operator
   # https://min.io/docs/minio/kubernetes/upstream/operations/install-deploy-manage/deploy-operator-helm.html
   releaseName: minio-operator
