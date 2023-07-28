@@ -1,5 +1,8 @@
 namespace: identity
 
+helmGlobals:
+  chartHome: helm
+
 secretGenerator:
 - name: identity-database-backup-creds
   files:
@@ -8,8 +11,39 @@ secretGenerator:
 generatorOptions:
   disableNameSuffixHash: true
 
+helmCharts:
+- name: tenant
+  valuesInline:
+    namespace: identity
+    secrets:
+      name: myminio-env-configuration
+      accessKey: minio
+      secretKey: minio123
+    tenant:
+      pools:
+        - name: 'pool-0'
+          containerSecurityContext:
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+          securityContext:
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+          size: '10Gi'
+          storageClassName: 'standard'
+      buckets:
+        - name: 'identity-backup'
+
+  version:
+  # Find the latest stable at https://github.com/minio/operator/tree/master/helm/tenant
+  # https://min.io/docs/minio/kubernetes/upstream/operations/install-deploy-manage/deploy-operator-helm.html
+  releaseName: identity-backup
+  repo: https://operator.min.io/
+  version: 5.0.6
+
 resources:
-  - identity-backup.yaml
   - identity-backup-proxy.yaml
   - identity-database.yaml
   - keycloak.yaml

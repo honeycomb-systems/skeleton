@@ -41,8 +41,8 @@ spec:
       repos:
       - name: repo1
         s3:
-          bucket: "identity-database-backup"
-          endpoint: "myminio-hl.identity-database.svc.cluster.local"
+          bucket: "identity-backup"
+          endpoint: "myminio-hl.identity.svc.cluster.local"
           region: "us-west-0"
         schedules:
           full: "0 0 * * *"

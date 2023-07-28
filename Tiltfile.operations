@@ -28,7 +28,7 @@ def data_postgres():
 # Deploy Keycloak for identity & access management
 def identity_keycloak():
     # Deploy to k8s
-    k8s_yaml(kustomize('./operations/identity/keycloak/charts/'))
+    k8s_yaml(kustomize('./operations/identity/keycloak/charts/', flags=["--enable-helm"]), allow_duplicates=True)
 
 
 # Deploy Istio for network mesh and proxy
@@ -70,6 +70,7 @@ data_postgres()
 network_istio()
 
 identity_keycloak()
-policy_kyverno()
+# TODO: Fix Kyverno, currently some pods don't start correctly in Tilt
+# policy_kyverno()
 secrets_vault()
 storage_minio()
