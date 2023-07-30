@@ -11,6 +11,7 @@ helmGlobals:
 helmCharts:
 
 - name: base
+  namespace: network
   valuesInline:
     defaultRevision: default
     global:
@@ -30,7 +31,6 @@ helmCharts:
     meshConfig.ingressService: istio-ingressgateway
     meshConfig.ingressSelector: istio-ingressgateway
     meshConfig.rootNamespace: network
-    namespace: network
     pilot.seccompProfile.type: RuntimeDefault
     watchedNamespaces: network
   releaseName: istio-istiod

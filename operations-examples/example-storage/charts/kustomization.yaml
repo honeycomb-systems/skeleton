@@ -5,8 +5,8 @@ helmGlobals:
 
 helmCharts:
 - name: tenant
+  namespace: example-storage
   valuesInline:
-    namespace: example-storage
     secrets:
       name: myminio-env-configuration
       accessKey: minio
