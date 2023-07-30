@@ -1,4 +1,7 @@
 namespace: network
+
 resources:
-  - metallb-native.yaml
+  # More details at:
+  #   https://kind.sigs.k8s.io/docs/user/loadbalancer/
+  - https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-native.yaml
   - metallb-conf.yaml
