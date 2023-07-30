@@ -13,8 +13,8 @@ generatorOptions:
 
 helmCharts:
 - name: tenant
+  namespace: identity
   valuesInline:
-    namespace: identity
     secrets:
       name: myminio-env-configuration
       accessKey: minio

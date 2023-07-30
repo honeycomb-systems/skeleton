@@ -30,7 +30,6 @@ helmCharts:
     meshConfig.ingressService: istio-ingressgateway
     meshConfig.ingressSelector: istio-ingressgateway
     meshConfig.rootNamespace: network
-    namespace: network
     pilot.seccompProfile.type: RuntimeDefault
     watchedNamespaces: network
   releaseName: istio-istiod

@@ -5,8 +5,8 @@ helmGlobals:
 
 helmCharts:
 - name: kyverno
+  namespace: policy
   valuesInline:
-    namespace: policy
     namespaceOverride: policy
     # TODO: create production deployment
     #admissionController.replicas: 3
@@ -16,9 +16,10 @@ helmCharts:
   version:
   releaseName: kyverno
   repo: https://kyverno.github.io/kyverno/
+
 - name: kyverno-policies
+  namespace: policy
   valuesInline:
-    namespace: policy
     namespaceOverride: policy
   version:
   releaseName: kyverno-policies
