@@ -10,6 +10,7 @@ Enable a service mesh and network proxy for services running in the k8s cluster.
     - Be sure the IP range selected in `metallb-conf.yaml` is a subset of the Docker network range
 
 2. Kustomize and apply the Kubernetes charts
+    - `kubectl apply -k ./cert-manager/charts/`
     - `kubectl apply -k ./metallb/charts/`
     - `kubectl apply -k ./istio/charts/`
 

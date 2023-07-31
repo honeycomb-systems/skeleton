@@ -1,0 +1,18 @@
+namespace: network
+
+helmGlobals:
+  chartHome: helm
+
+# Review installation docs at https://cert-manager.io/docs/installation/helm/
+helmCharts:
+
+- name: cert-manager
+  namespace: network
+  valuesInline:
+    installCRDs: true
+  releaseName: cert-manager
+  repo: https://charts.jetstack.io
+  version: 1.12.2
+
+#resources:
+#  - selfsigned-cluster-issuer.yaml
