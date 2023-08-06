@@ -1,0 +1,12 @@
+namespace: delivery
+
+resources:
+  - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  - argocd-proxy.yaml
+
+configMapGenerator:
+- name: argocd-cmd-params-cm
+  behavior: merge
+  envs:
+  - argocd-cmd-params-cm.env
+

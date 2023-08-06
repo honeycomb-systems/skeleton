@@ -24,6 +24,10 @@ def data_postgres():
         cmd='kubectl apply --server-side -k ./operations/data/postgres-operator/charts/default'
     )
 
+# Deploy ArgoCD for software delivery
+def delivery_argocd():
+    # Deploy to k8s
+    k8s_yaml(kustomize('./operations/delivery/argocd/charts/'), allow_duplicates=True)
 
 # Deploy Keycloak for identity & access management
 def identity_keycloak():
@@ -67,6 +71,7 @@ docker_prune_settings(disable=False, max_age_mins=120, num_builds=3, keep_recent
 operations()
 
 data_postgres()
+delivery_argocd()
 network_istio()
 
 identity_keycloak()
