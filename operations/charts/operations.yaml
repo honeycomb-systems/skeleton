@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: operations
+  namespace: delivery
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  description: Clusterwide shared Kubernetes components
+  destinations:
+  - name: in-cluster
+    namespace: '*'
+    server: https://kubernetes.default.svc
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  sourceRepos:
+  - https://github.com/honeycomb-systems/skeleton

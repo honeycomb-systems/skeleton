@@ -47,6 +47,7 @@ kubectl apply -f - -n kube-system
 
 6. After tilt shows success on most projects, create some hostnames that point at the primary load balancer:
     - `export LOAD_BALANCER_IP=$(kubectl get service -A | grep LoadBalancer | awk '{print $5}')`
+    - `sudo hostctl add domains dev delivery.home.arpa --ip $LOAD_BALANCER_IP`
     - `sudo hostctl add domains dev identity.home.arpa --ip $LOAD_BALANCER_IP`
     - `sudo hostctl add domains dev identity-backup.home.arpa --ip $LOAD_BALANCER_IP`
     - `sudo hostctl add domains dev secrets.home.arpa --ip $LOAD_BALANCER_IP`
