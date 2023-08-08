@@ -9,10 +9,20 @@ configured under the operations/ directory.
 
 # Create namespace
 def operations():
-    # Deploy to k8s
+    # Prepare k8s for operations installs
     local_resource(
         'install-namespaces',
         cmd='kubectl apply -f ./operations/charts/namespace.yaml'
+    )
+
+    local_resource(
+        'install-delivery-repository',
+        cmd='kubectl apply -f ./operations/charts/repository.yaml'
+    )
+
+    local_resource(
+        'install-operations-delivery',
+        cmd='kubectl apply -f ./operations/charts/operations.yaml'
     )
 
 
